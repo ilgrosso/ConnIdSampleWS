@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://impl.provisioningws.test.tirasa.net/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://provisioningws.test.tirasa.net/" name="UserServiceImplService" targetNamespace="http://impl.provisioningws.test.tirasa.net/">
+  <wsdl:import location="http://localhost:9000/services/users?wsdl=UserService.wsdl" namespace="http://provisioningws.test.tirasa.net/">
+    </wsdl:import>
+  <wsdl:binding name="UserServiceImplServiceSoapBinding" type="ns1:UserService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="NotFoundException">
+        <soap:fault name="NotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getUsers">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getUsers">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getUsersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="UserServiceImplService">
+    <wsdl:port binding="tns:UserServiceImplServiceSoapBinding" name="UserServiceImplPort">
+      <soap:address location="http://localhost:9000/services/users"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

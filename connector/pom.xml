@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+      
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>net.tirasa.connid</groupId>
+    <artifactId>connid</artifactId>
+    <version>1.4.2.0</version>
+  </parent>
+    
+  <groupId>net.tirasa.connid.test</groupId>
+  <artifactId>connIdWS</artifactId>
+  <version>1.0-SNAPSHOT</version>        
+  <name>ConnId Sample SOAP Bundle</name>
+  <packaging>jar</packaging>
+
+  <properties>
+    <connid.version>1.4.2.0</connid.version>
+    <cxf.version>3.1.10</cxf.version>
+        
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>net.tirasa.connid</groupId>
+      <artifactId>connector-framework</artifactId>
+      <version>${connid.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.tirasa.connid</groupId>
+      <artifactId>connector-framework-internal</artifactId>
+      <version>${connid.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.tirasa.connid.bundles.soap</groupId>
+      <artifactId>soap-utilities</artifactId>
+      <version>1.4.1</version>
+    </dependency>
+
+    <!-- CXF -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+                        
+    <!-- TEST -->        
+    <dependency>
+      <groupId>net.tirasa.connid</groupId>
+      <artifactId>connector-test-common</artifactId>
+      <version>${connid.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+    
+  <build>
+    <plugins>
+      <!-- Disable any licese check -->  
+      <plugin>        
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <inherited>true</inherited>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <inherited>true</inherited>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+        <executions>
+          <execution>
+            <id>copy-javadoc-legal-files</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>ianal-maven-plugin</artifactId>
+        <inherited>true</inherited>
+        <executions>
+          <execution>            
+            <goals>
+              <goal>verify-legal-files</goal>
+            </goals>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-codegen-plugin</artifactId>
+        <version>${cxf.version}</version>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>generate-sources</phase>
+            <configuration>
+              <sourceRoot>${project.build.directory}/generated-sources</sourceRoot>
+              <wsdlOptions>
+                <wsdlOption>
+                  <wsdl>${basedir}/src/main/resources/users.wsdl</wsdl>
+                </wsdlOption>
+              </wsdlOptions>
+            </configuration>
+            <goals>
+              <goal>wsdl2java</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${project.build.directory}/generated-sources</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+       
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <inherited>true</inherited>
+        <configuration>
+          <appendAssemblyId>true</appendAssemblyId>
+          <descriptors>
+            <descriptor>src/assemble/connector.xml</descriptor>
+          </descriptors>
+          <archive>
+            <index>true</index>
+            <manifestEntries>
+              <ConnectorBundle-FrameworkVersion>${connid.version}</ConnectorBundle-FrameworkVersion>
+              <ConnectorBundle-Name>${project.artifactId}</ConnectorBundle-Name>
+              <ConnectorBundle-Version>${project.version}</ConnectorBundle-Version>
+            </manifestEntries>
+          </archive>
+        </configuration>                
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>sonatype</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+      </snapshots>
+    </repository>
+  </repositories>
+
+</project>
