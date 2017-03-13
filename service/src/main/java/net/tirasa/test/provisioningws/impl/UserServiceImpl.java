@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         mr.setInitials("MR");
         mr.setFirstname("Mario");
         mr.setSurname("Rossi");
-        mr.setBirhdate(calendar.getTime());
+        mr.setBirthdate(calendar.getTime());
         USERS.put(mr.getInitials(), mr);
 
         calendar = Calendar.getInstance();
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         fb.setInitials("FB");
         fb.setFirstname("Filippo");
         fb.setSurname("Bianchi");
-        fb.setBirhdate(calendar.getTime());
+        fb.setBirthdate(calendar.getTime());
         USERS.put(fb.getInitials(), fb);
     }
 

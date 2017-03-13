@@ -1,9 +1,9 @@
 package net.tirasa.connid.bundles.soap;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import net.tirasa.connid.bundles.soap.utilities.Operand;
 import net.tirasa.test.provisioningws.User;
 import net.tirasa.test.provisioningws.UserService;
@@ -122,11 +122,11 @@ public class WebServiceConnector implements
         AttributeInfoBuilder initialsAIB = new AttributeInfoBuilder("initials", String.class);
         initialsAIB.setRequired(true);
 
-        HashSet<AttributeInfo> attrsInfo = new HashSet<AttributeInfo>();
+        Set<AttributeInfo> attrsInfo = new HashSet<AttributeInfo>();
         attrsInfo.add(initialsAIB.build());
         attrsInfo.add(AttributeInfoBuilder.build("firstname", String.class));
         attrsInfo.add(AttributeInfoBuilder.build("surname", String.class));
-        attrsInfo.add(AttributeInfoBuilder.build("birhdate", Date.class));
+        attrsInfo.add(AttributeInfoBuilder.build("birthdate", String.class));
 
         ObjectClassInfo ociOrg = new ObjectClassInfoBuilder().setType(ObjectClass.ACCOUNT_NAME).
                 addAllAttributeInfo(attrsInfo).
@@ -235,7 +235,7 @@ public class WebServiceConnector implements
 
         bld.addAttribute(AttributeBuilder.build("firstname", user.getFirstname()));
         bld.addAttribute(AttributeBuilder.build("surname", user.getSurname()));
-        bld.addAttribute(AttributeBuilder.build("birthdate", user.getBirhdate()));
+        bld.addAttribute(AttributeBuilder.build("birthdate", user.getBirthdate()));
 
         return bld;
     }

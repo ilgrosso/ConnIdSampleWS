@@ -10,7 +10,7 @@ public class User {
 
     private String surname;
 
-    private Date birhdate;
+    private Date birthdate;
 
     public String getInitials() {
         return initials;
@@ -36,12 +36,12 @@ public class User {
         this.surname = surname;
     }
 
-    public Date getBirhdate() {
-        return birhdate;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
-    public void setBirhdate(Date birhdate) {
-        this.birhdate = birhdate;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
     }
 
 }
