@@ -126,7 +126,7 @@ public class WebServiceConnector implements
         attrsInfo.add(initialsAIB.build());
         attrsInfo.add(AttributeInfoBuilder.build("firstname", String.class));
         attrsInfo.add(AttributeInfoBuilder.build("surname", String.class));
-        attrsInfo.add(AttributeInfoBuilder.build("birthdate", String.class));
+        attrsInfo.add(AttributeInfoBuilder.build("birthdate", Long.class));
 
         ObjectClassInfo ociOrg = new ObjectClassInfoBuilder().setType(ObjectClass.ACCOUNT_NAME).
                 addAllAttributeInfo(attrsInfo).
@@ -235,7 +235,8 @@ public class WebServiceConnector implements
 
         bld.addAttribute(AttributeBuilder.build("firstname", user.getFirstname()));
         bld.addAttribute(AttributeBuilder.build("surname", user.getSurname()));
-        bld.addAttribute(AttributeBuilder.build("birthdate", user.getBirthdate()));
+        bld.addAttribute(
+                AttributeBuilder.build("birthdate", user.getBirthdate().toGregorianCalendar().getTimeInMillis()));
 
         return bld;
     }
